@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Task;  //追加
+use App\Models\Task;
 
 
 class TasksController extends Controller
@@ -18,7 +18,6 @@ class TasksController extends Controller
         return view('tasks.index', [
             'tasks' => $tasks,
         ]);
-        //
     }
 
     /**
@@ -82,7 +81,7 @@ class TasksController extends Controller
 
         return redirect('/');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */
