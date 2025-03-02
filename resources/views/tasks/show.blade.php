@@ -13,7 +13,7 @@
         </tr>
         <tr>
             <th>タイトル</th>
-            <td>{{ $tasks->title }}</td>
+            <td>{{ $task->title }}</td>
         </tr>
         <tr>
             <th>タスク</th>
