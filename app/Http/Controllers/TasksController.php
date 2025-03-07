@@ -9,6 +9,11 @@ use App\Models\Task;
 
 class TasksController extends Controller
 {
+    public function __construct()
+    {
+        // ログインしていないユーザーをログインページにリダイレクト
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -44,6 +49,7 @@ class TasksController extends Controller
         ]);
         
         $task = new Task;
+        $task->user_id = auth()->id();
         $task->content = $request->content;
         $task->status = $request->status;
         $task->save();
@@ -57,10 +63,15 @@ class TasksController extends Controller
     public function show(string $id)
     {
         $task = Task::findOrFail($id);
-        //
+
+        if ($task->user_id !== auth()->id()) {
+            return redirect('/');
+        }
+        
         return view('tasks.show', [
             'task' => $task,
         ]);
+
     }
 
     /**
@@ -69,10 +80,15 @@ class TasksController extends Controller
     public function edit(string $id)
     {
         $task = Task::findOrFail($id);
-        //
+        
+        if ($task->user_id !== auth()->id()) {
+            return redirect('/');
+        }
+
         return view('tasks.edit', [
             'task' => $task,
         ]);
+    
     }
 
     /**
@@ -100,8 +116,13 @@ class TasksController extends Controller
     public function destroy(string $id)
     {
         $task = Task::findOrFail($id);
+
+        if ($task->user_id === auth()->id()) {
         $task->delete();
-        //
+        return redirect('/')->with('success','Delete Successful');
+        }
+
         return redirect('/');
     }
+
 }

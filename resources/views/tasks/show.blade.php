@@ -21,7 +21,8 @@
             <td>{{ $task->status }}</td>
         </tr>
     </table>
-
+    
+    @if (auth()->id() === $task->user_id)
     <a class="btn btn-outline" href="{{ route('tasks.edit', $task->id) }}">このタスクを編集</a>
 
     <form method="POST" action="{{ route('tasks.destroy', $task->id) }}" class="my-2">
