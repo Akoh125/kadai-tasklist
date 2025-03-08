@@ -32,6 +32,6 @@
         <button type="submit" class="btn btn-error btn-outline" 
             onclick="return confirm('id = {{ $task->id }} のタスクを削除します。よろしいですか？')">削除</button>
     </form>
-
+    @endif
     
 @endsection
