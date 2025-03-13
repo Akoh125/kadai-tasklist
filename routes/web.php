@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+//use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TasksController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController; // 追記
 
 /*
 |--------------------------------------------------------------------------
@@ -16,18 +17,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+// 認証済みユーザーのみアクセス可能
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('tasks', TasksController::class);
+    Route::resource('tasks', TasksController::class)->except(['index', 'show']);
+    //Route::get('/tasks', [TasksController::class, 'index'])->name('tasks.index');
+    //Route::get('/tasks/{task}', [TasksController::class, 'show'])->name('tasks.show');
 });
 
 require __DIR__.'/auth.php';
