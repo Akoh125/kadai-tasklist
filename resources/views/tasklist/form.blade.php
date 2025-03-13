@@ -1,6 +1,6 @@
 @if (Auth::id() == $user->id)
     <div class="mt-4">
-        <form method="POST" action="{{ route('tasklist.store') }}">
+        <form method="POST" action="{{ route('tasks.store') }}">
             @csrf
         
             <div class="form-control mt-4">
